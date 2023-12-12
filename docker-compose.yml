@@ -1,0 +1,22 @@
+version: '3'
+services:
+  grid:
+    build: ./Grid
+    ports:
+      - "3001:3001"
+  text:
+    build: ./Text
+    ports:
+      - "3002:3002"
+  image:
+    build: ./Image
+    ports:
+      - "3003:3003"
+  list:
+    build: ./List
+    ports:
+      - "3004:3004"
+  container:
+    build: ./Container
+    ports:
+      - "3000:3000"

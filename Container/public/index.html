@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #root {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: 100vh;
+      }
+      .microapp-container {
+        border: 1px solid black;
+        overflow: auto;
+      }
+      #image {
+        overflow: hidden;
+      }
+      #text {
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="grid" class="microapp-container">Loading...</div>
+      <div id="text" class="microapp-container">Loading...</div>
+      <div id="image" class="microapp-container">Loading...</div>
+      <div id="list" class="microapp-container">Loading...</div>
+    </div>
+
+    <script type="module">
+      const config = [
+        {
+          id: "grid",
+          url: "http://localhost:3001/bundle.js",
+        },
+        {
+          id: "text",
+          url: "http://localhost:3002/bundle.js",
+        },
+        {
+          id: "image",
+          url: "http://localhost:3003/bundle.js",
+        },
+        {
+          id: "list",
+          url: "http://localhost:3004/bundle.js",
+          data: [
+            "element 1",
+            "element 2",
+            "element 3",
+            "element 4",
+            "element 5",
+            "element 6",
+            "element 7",
+            "element 8",
+            "element 9",
+            "element 10",
+          ],
+        },
+      ];
+      import { initApp } from "http://localhost:3001/bundle.js";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        config.forEach(async (item) => {
+          try {
+            const { initApp } = await import(item.url);
+            initApp(item.id, item.data);
+          } catch (error) {
+            console.error(error);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
